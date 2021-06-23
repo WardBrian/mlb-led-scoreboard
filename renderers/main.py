@@ -25,11 +25,11 @@ class MainRenderer:
         self.game_changed_time = time.time()
         self.animation_time = 0
 
-    def render(self, screen):
+    def render(self):
+        screen = self.data.get_screen_type()
         # display the news ticker
         if screen == "news":
             self.__render_offday()
-
         # display the standings
         elif screen == "standings":
             self.__render_standings()

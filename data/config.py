@@ -1,4 +1,3 @@
-from data.status import Status
 import json
 import os
 import sys
@@ -6,6 +5,7 @@ import sys
 import debug
 from data.color import Color
 from data.layout import Layout
+from data.status import Status
 from utils import deep_update, get_file
 
 SCROLLING_SPEEDS = [0.3, 0.2, 0.1, 0.075, 0.05, 0.025, 0.01]

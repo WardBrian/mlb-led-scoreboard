@@ -72,7 +72,7 @@ class Data:
             if self.config.rotation_preferred_team_live_mid_inning and Status.is_inning_break(game.inning_state()):
                 return True
             return False
-            
+
         return True
 
     def refresh_game(self):
@@ -112,6 +112,30 @@ class Data:
             self.network_issues = False
         elif status == UpdateStatus.FAIL:
             self.network_issues = True
+
+    def get_screen_type(self):
+        # Always the news
+        if self.config.news_ticker_always_display:
+            return "news"
+        # Always the standings
+        elif self.config.standings_always_display:
+            return "standings"
+
+        # Full MLB Offday
+        elif self.schedule.is_offday():
+            if self.config.standings_mlb_offday:
+                return "standings"
+            else:
+                return "news"
+        # Preferred Team Offday
+        elif self.schedule.is_offday_for_preferred_team():
+            if self.config.news_ticker_team_offday:
+                return "news"
+            elif self.config.standings_team_offday:
+                return "standings"
+        # Playball!
+        else:
+            return "games"
 
     def __update_layout_state(self):
         self.config.layout.set_state()

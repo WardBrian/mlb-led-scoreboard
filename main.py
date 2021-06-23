@@ -49,7 +49,7 @@ def main(matrix):
     render = threading.Thread(target=__render_main, args=[matrix, data], name="render_thread", daemon=True)
     render.start()
 
-    screen = get_screen_type(data)
+    screen = data.get_screen_type()
     if screen == "news":
         __refresh_offday(render, data)
     elif screen == "standings":
@@ -109,32 +109,7 @@ def __refresh_games(render_thread: threading.Thread, data: Data):
 
 
 def __render_main(matrix, data):
-    MainRenderer(matrix, data).render(get_screen_type(data))
-
-
-def get_screen_type(data: Data):
-    # Always the news
-    if data.config.news_ticker_always_display:
-        return "news"
-    # Always the standings
-    elif data.config.standings_always_display:
-        return "standings"
-
-    # Full MLB Offday
-    elif data.schedule.is_offday():
-        if data.config.standings_mlb_offday:
-            return "standings"
-        else:
-            return "news"
-    # Preferred Team Offday
-    elif data.schedule.is_offday_for_preferred_team():
-        if data.config.news_ticker_team_offday:
-            return "news"
-        elif data.config.standings_team_offday:
-            return "standings"
-    # Playball!
-    else:
-        return "games"
+    MainRenderer(matrix, data).render()
 
 
 if __name__ == "__main__":
