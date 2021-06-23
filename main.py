@@ -22,12 +22,7 @@ SCRIPT_NAME = "MLB LED Scoreboard"
 SCRIPT_VERSION = "5.0.0-dev"
 
 
-def main(args_in):
-    # Check for led configuration arguments
-    matrixOptions = led_matrix_options(args_in)
-
-    # Initialize the matrix
-    matrix = RGBMatrix(options=matrixOptions)
+def main(matrix):
 
     # Read scoreboard options from config.json if it exists
     config = Config("config", matrix.width, matrix.height)
@@ -85,7 +80,7 @@ def __refresh_games(render_thread: threading.Thread, data: Data):
     debug.log("Main has selected the game and schedule information to refresh")
 
     starttime = time.time()
-    promise_game = False
+    promise_game = data.schedule.games_live()
 
     while render_thread.is_alive():
         time.sleep(0.5)
@@ -143,8 +138,15 @@ def get_screen_type(data: Data):
 
 
 if __name__ == "__main__":
+    # Check for led configuration arguments
+    matrixOptions = led_matrix_options(args())
+
+    # Initialize the matrix
+    matrix = RGBMatrix(options=matrixOptions)
     try:
-        main(args())
+        main(matrix)
     except:
         debug.exception("Untrapped error in main!")
         raise
+    finally:
+        matrix.Clear()
