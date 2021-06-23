@@ -1,3 +1,4 @@
+from data.status import Status
 import json
 import os
 import sys
@@ -157,6 +158,14 @@ class Config:
         self.rotation_rates_live = self.rotation_rates.get("live", DEFAULT_ROTATE_RATES["live"])
         self.rotation_rates_final = self.rotation_rates.get("final", DEFAULT_ROTATE_RATES["final"])
         self.rotation_rates_pregame = self.rotation_rates.get("pregame", DEFAULT_ROTATE_RATES["pregame"])
+
+    def rotate_rate_for_status(self, status):
+        rotate_rate = self.rotation_rates_live
+        if Status.is_pregame(status):
+            rotate_rate = self.rotation_rates_pregame
+        if Status.is_complete(status):
+            rotate_rate = self.rotation_rates_final
+        return rotate_rate
 
     def read_json(self, filename):
         j = {}
