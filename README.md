@@ -52,21 +52,21 @@ It can display live games in action, and optionally rotate every 15 seconds thro
 
 The board refreshes the list of games every 15 minutes.
 
-![Cubs-Indians game](img/cubs-indians-demo.jpg) ![Pirates-Cubs game](img/pirates-cubs-demo.jpg) ![Giants-Brewers-wide game](img/wide-ingame-demo.jpg) ![Cubs-Braves Final](img/wide-final-demo.jpg) ![Tigers-Royals game](img/128x32-live.png) ![Astros-Athletics game](img/128x64.png) ![64x64 example](img/64x64-live.jpg)
+![Cubs-Indians game](assets/img/cubs-indians-demo.jpg) ![Pirates-Cubs game](assets/img/pirates-cubs-demo.jpg) ![Giants-Brewers-wide game](assets/img/wide-ingame-demo.jpg) ![Cubs-Braves Final](assets/img/wide-final-demo.jpg) ![Tigers-Royals game](assets/img/128x32-live.png) ![Astros-Athletics game](assets/img/128x64.png) ![64x64 example](assets/img/64x64-live.jpg)
 
 Sometimes you don't get baseball though :(
 
-![I hate offdays](img/offday.jpg)
+![I hate offdays](assets/img/offday.jpg)
 
 ### Pregame
 If a game hasn't started yet, a pregame screen will be displayed with the probable starting pitchers.
 
-![Pregame](img/pregame.jpg)
+![Pregame](assets/img/pregame.jpg)
 
 ### Division Standings
 It can display standings for the provided division. Since the 32x32 board is too small to display wins and losses together, the wins and losses are alternated on the board every 5 seconds.
 
-![standings-wins](img/standings-wins.jpg) ![standings-losses](img/standings-losses.jpg) ![standings-wide](img/wide-standings-demo.jpg)
+![standings-wins](assets/img/standings-wins.jpg) ![standings-losses](assets/img/standings-losses.jpg) ![standings-wide](assets/img/wide-standings-demo.jpg)
 
 ## Installation
 ### Hardware Assembly
