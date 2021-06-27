@@ -2,19 +2,17 @@ import time
 from typing import NoReturn
 
 import debug
-from data.postgame import Postgame
-from data.pregame import Pregame
 from data.scoreboard import Scoreboard
+from data.scoreboard.postgame import Postgame
+from data.scoreboard.pregame import Pregame
 from data.status import Status
-from renderers import game as gamerender
-from renderers import irregular, network, offday
-from renderers import postgame as postgamerender
-from renderers import pregame as pregamerender
-from renderers import teams
+from renderers import network, offday
+from renderers.games import game as gamerender
+from renderers.games import irregular
+from renderers.games import postgame as postgamerender
+from renderers.games import pregame as pregamerender
+from renderers.games import teams
 from renderers.standings import StandingsRenderer
-
-SCROLL_TEXT_FAST_RATE = 0.1
-SCROLL_TEXT_SLOW_RATE = 0.2
 
 
 class MainRenderer:
@@ -65,7 +63,7 @@ class MainRenderer:
             time.sleep(self.data.config.scrolling_speed)
 
     # Render the standings screen
-    def __render_standings(self):
+    def __render_standings(self) -> NoReturn:
         if self.data.standings.divisions:
             StandingsRenderer(self.matrix, self.canvas, self.data).render()
         else:
@@ -74,7 +72,7 @@ class MainRenderer:
             self.__render_offday()
 
     # Renders a game screen based on it's status
-    def __render_game(self):
+    def __render_game(self) -> NoReturn:
         # Set the refresh rate
         refresh_rate = self.data.config.scrolling_speed
 

@@ -7,9 +7,9 @@ import time
 
 from PIL import Image
 
-from data.color import Color
+from data.config.color import Color
+from data.config.layout import Layout
 from data.headlines import Headlines
-from data.layout import Layout
 from data.weather import Weather
 from renderers import scrollingtext
 from utils import center_text_position, get_file

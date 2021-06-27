@@ -3,8 +3,8 @@ import os
 import sys
 
 import debug
-from data.color import Color
-from data.layout import Layout
+from data.config.color import Color
+from data.config.layout import Layout
 from data.status import Status
 from utils import deep_update, get_file
 
@@ -194,9 +194,7 @@ class Config:
         reference_colors = self.read_json(reference_filename)
         if not reference_colors:
             debug.error(
-                "Invalid {} reference color file. Make sure {} exists in colors/".format(
-                    base_filename, base_filename
-                )
+                "Invalid {} reference color file. Make sure {} exists in colors/".format(base_filename, base_filename)
             )
             sys.exit(1)
 

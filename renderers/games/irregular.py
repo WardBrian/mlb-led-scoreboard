@@ -3,8 +3,8 @@ try:
 except ImportError:
     from RGBMatrixEmulator import graphics
 
-from data.color import Color
-from data.layout import Layout
+from data.config.color import Color
+from data.config.layout import Layout
 from data.scoreboard import Scoreboard
 from data.status import Status
 from renderers import scrollingtext

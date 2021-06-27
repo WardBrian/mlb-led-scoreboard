@@ -3,14 +3,15 @@ try:
 except ImportError:
     from RGBMatrixEmulator import graphics
 
-from data.color import Color
-from data.layout import Layout
+from data.config.color import Color
+from data.config.layout import Layout
 from data.scoreboard import Scoreboard
 from data.scoreboard.atbat import AtBat
 from data.scoreboard.bases import Bases
 from data.scoreboard.inning import Inning
 from data.scoreboard.pitches import Pitches
-from renderers import nohitter, scrollingtext
+from renderers.games import nohitter
+from renderers import scrollingtext
 
 
 def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboard, text_pos: int, animation_time: int):

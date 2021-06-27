@@ -1,13 +1,13 @@
 import time
 from datetime import datetime, timedelta
 
-import data.layout as layout
+import data.config.layout as layout
 import debug
 from data.headlines import Headlines
-from data.postgame import Postgame
-from data.pregame import Pregame
 from data.schedule import Schedule
 from data.scoreboard import Scoreboard
+from data.scoreboard.postgame import Postgame
+from data.scoreboard.pregame import Pregame
 from data.standings import Standings
 from data.status import Status
 from data.update import UpdateStatus

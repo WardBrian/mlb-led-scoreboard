@@ -3,11 +3,12 @@ try:
 except ImportError:
     from RGBMatrixEmulator import graphics
 
-from data.color import Color
-from data.layout import Layout
-from data.postgame import Postgame
+from data.config.color import Color
+from data.config.layout import Layout
 from data.scoreboard import Scoreboard
-from renderers import nohitter, scrollingtext
+from data.scoreboard.postgame import Postgame
+from renderers.games import nohitter
+from renderers import scrollingtext
 from utils import center_text_position
 
 NORMAL_GAME_LENGTH = 9
