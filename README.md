@@ -2,7 +2,7 @@
 
 ## Brian Ward's fork
 
-This version differs rather signficantly from the original, including tweaks to behavior, visuals, and different underlying code
+This version differs rather signficantly from the original, including tweaks to behavior, visuals, and different underlying code. The rest of this README is primarily for the original, not yet updated.
 
 ---------------
 
