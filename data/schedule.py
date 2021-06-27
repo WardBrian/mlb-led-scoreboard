@@ -82,7 +82,8 @@ class Schedule:
         # rotating during mid-innings
         # TODO verify during a double-header
         if (
-            self.config.rotation_preferred_team_live_mid_inning
+            not self.config.rotation_preferred_team_live_enabled
+            and self.config.rotation_preferred_team_live_mid_inning
             and not self.is_offday_for_preferred_team()
             and not self.preferred_over
         ):

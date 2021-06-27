@@ -189,12 +189,12 @@ class Config:
         return reference_config
 
     def __get_colors(self, base_filename):
-        filename = "ledcolors/{}.json".format(base_filename)
+        filename = "colors/{}.json".format(base_filename)
         reference_filename = "{}.example".format(filename)
         reference_colors = self.read_json(reference_filename)
         if not reference_colors:
             debug.error(
-                "Invalid {} reference color file. Make sure {} exists in ledcolors/".format(
+                "Invalid {} reference color file. Make sure {} exists in colors/".format(
                     base_filename, base_filename
                 )
             )
@@ -208,7 +208,7 @@ class Config:
         return reference_colors
 
     def __get_layout(self, width, height):
-        filename = "ledcoords/w{}h{}.json".format(width, height)
+        filename = "coordinates/w{}h{}.json".format(width, height)
         reference_filename = "{}.example".format(filename)
         reference_layout = self.read_json(reference_filename)
         if not reference_layout:

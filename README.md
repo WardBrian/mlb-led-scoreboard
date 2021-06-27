@@ -192,10 +192,10 @@ You can configure your LED matrix with the same flags used in the [rpi-rgb-led-m
 ## Personalization
 If you're feeling adventurous (and we highly encourage it!), the sections below outline how you can truly personalize your scoreboard and make it your own!
 ### Custom Board Layout
-You have the ability to customize the way things are placed on the board (maybe you would prefer to see scrolling text for a pregame a bit higher or lower). See the `ledcoords/` directory for more information.
+You have the ability to customize the way things are placed on the board (maybe you would prefer to see scrolling text for a pregame a bit higher or lower). See the `coordinates/` directory for more information.
 
 ### Custom Colors
-You have the ability to customize the colors of everything on the board. See the `ledcolors/` directory for more information.
+You have the ability to customize the colors of everything on the board. See the `colors/` directory for more information.
 
 ### Weather
 This scoreboard will use a weather API to gather weather information at various times. This information is displayed on your teams offdays for your area and also displayed during each game's pregame information. The weather API we use is from OpenWeatherMaps. OpenWeatherMaps API requires an API key to fetch this data so you will need to take a quick minute to sign up for an account and copy your own API key into your `config.json`.

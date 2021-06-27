@@ -11,26 +11,21 @@ PERFECT_GAME_TEXT = "P.G"
 UNKNOWN_TEXT = "???"
 
 
-class NoHitterRenderer:
-    def __init__(self, canvas, data):
-        self.canvas = canvas
-        self.layout = data.config.layout
-        self.colors = data.config.scoreboard_colors
+def render_nohit_text(canvas, layout, colors):
+    font = layout.font("nohitter")
+    coords = layout.coords("nohitter")
+    text_color = colors.graphics_color("nohit_text")
+    text = _get_nohitter_text(layout)
+    graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], text_color, text)
 
-    def render(self):
-        font = self.layout.font("nohitter")
-        coords = self.layout.coords("nohitter")
-        text_color = self.colors.graphics_color("nohit_text")
-        text = self.nohitter_text()
-        graphics.DrawText(self.canvas, font["font"], coords["x"], coords["y"], text_color, text)
 
-    def nohitter_text(self):
-        if self.layout.state == data.layout.LAYOUT_STATE_NOHIT:
-            return NOHITTER_TEXT
+def _get_nohitter_text(layout):
+    if layout.state == data.layout.LAYOUT_STATE_NOHIT:
+        return NOHITTER_TEXT
 
-        if self.layout.state == data.layout.LAYOUT_STATE_PERFECT:
-            return PERFECT_GAME_TEXT
+    if layout.state == data.layout.LAYOUT_STATE_PERFECT:
+        return PERFECT_GAME_TEXT
 
-        # If we get this far, the nohitter renderer probably shouldn't have been rendered.
-        debug.log("NoHitterRenderer is renderering with an unknown state.")
-        return UNKNOWN_TEXT
+    # If we get this far, the nohitter renderer probably shouldn't have been rendered.
+    debug.log("No Hitter text is renderering with an unknown state.")
+    return UNKNOWN_TEXT

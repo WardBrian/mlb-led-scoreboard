@@ -5,7 +5,8 @@ except ImportError:
 
 import time
 
-from renderers.network import NetworkErrorRenderer
+import debug
+from renderers import network
 from utils import center_text_position
 
 
@@ -61,7 +62,9 @@ class StandingsRenderer:
                 )
 
                 offset += coords["offset"]
-            NetworkErrorRenderer(self.canvas, self.data).render()
+            # Show network issues
+            if self.data.network_issues:
+                network.render_network_error(self.canvas, self.data.config.layout, self.colors)
 
             self.matrix.SwapOnVSync(self.canvas)
             time.sleep(5.0)
@@ -73,6 +76,7 @@ class StandingsRenderer:
             else:
                 stat = "l"
             if self.__games_playing():
+                debug.log("Exiting standings to show games!")
                 break
 
     def __render_static_wide_standings(self):
@@ -109,7 +113,9 @@ class StandingsRenderer:
                 offset += coords["offset"]
 
             self.__fill_standings_footer()
-            NetworkErrorRenderer(self.canvas, self.data).render()
+            # Show network issues
+            if self.data.network_issues:
+                network.render_network_error(self.canvas, self.data.config.layout, self.colors)
 
             self.matrix.SwapOnVSync(self.canvas)
             time.sleep(10.0)
@@ -117,6 +123,7 @@ class StandingsRenderer:
             self.__fill_bg()
             self.data.standings.advance_to_next_standings()
             if self.__games_playing():
+                debug.log("Exiting standings to show games!")
                 break
 
     def __fill_standings_footer(self):

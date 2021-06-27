@@ -378,13 +378,6 @@ class Status:
         UNKNOWN,
     ]
 
-    GAME_STATE_STATIC = [IN_PROGRESS]
-
-    @staticmethod
-    def is_static(status):
-        """Returns whether the game being currently displayed has no text to scroll"""
-        return status in Status.GAME_STATE_STATIC
-
     @staticmethod
     def is_pregame(status):
         """Returns whether the game is in a pregame state"""
