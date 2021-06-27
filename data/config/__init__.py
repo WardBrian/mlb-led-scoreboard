@@ -5,7 +5,7 @@ import sys
 import debug
 from data.config.color import Color
 from data.config.layout import Layout
-from data.status import Status
+from data import status
 from utils import deep_update, get_file
 
 SCROLLING_SPEEDS = [0.3, 0.2, 0.1, 0.075, 0.05, 0.025, 0.01]
@@ -161,9 +161,9 @@ class Config:
 
     def rotate_rate_for_status(self, status):
         rotate_rate = self.rotation_rates_live
-        if Status.is_pregame(status):
+        if status.is_pregame(status):
             rotate_rate = self.rotation_rates_pregame
-        if Status.is_complete(status):
+        if status.is_complete(status):
             rotate_rate = self.rotation_rates_final
         return rotate_rate
 

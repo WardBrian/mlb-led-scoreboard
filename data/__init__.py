@@ -9,7 +9,7 @@ from data.scoreboard import Scoreboard
 from data.scoreboard.postgame import Postgame
 from data.scoreboard.pregame import Pregame
 from data.standings import Standings
-from data.status import Status
+from data import status
 from data.update import UpdateStatus
 from data.weather import Weather
 
@@ -68,11 +68,11 @@ class Data:
         if self.schedule.num_games() < 2:
             if self.config.rotation_only_live and self.schedule.games_live():
                 # don't want to get stuck on an dead game
-                return not Status.is_live(game.status())
+                return not status.is_live(game.status())
             return False
 
-        if game.features_team(self.config.preferred_teams[0]) and Status.is_live(game.status()):
-            if self.config.rotation_preferred_team_live_mid_inning and Status.is_inning_break(game.inning_state()):
+        if game.features_team(self.config.preferred_teams[0]) and status.is_live(game.status()):
+            if self.config.rotation_preferred_team_live_mid_inning and status.is_inning_break(game.inning_state()):
                 return True
             return False
 
@@ -142,7 +142,7 @@ class Data:
 
     def __update_layout_state(self):
         self.config.layout.set_state()
-        if self.current_game.status() == Status.WARMUP:
+        if self.current_game.status() == status.WARMUP:
             self.config.layout.set_state(layout.LAYOUT_STATE_WARMUP)
 
         if self.current_game.is_no_hitter():

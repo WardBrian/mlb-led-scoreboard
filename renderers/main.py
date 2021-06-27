@@ -5,7 +5,7 @@ import debug
 from data.scoreboard import Scoreboard
 from data.scoreboard.postgame import Postgame
 from data.scoreboard.pregame import Pregame
-from data.status import Status
+from data import status
 from renderers import network, offday
 from renderers.games import game as gamerender
 from renderers.games import irregular
@@ -113,13 +113,13 @@ class MainRenderer:
             self.data.config.full_team_names,
         )
 
-        if Status.is_pregame(game.status()):  # Draw the pregame information
+        if status.is_pregame(game.status()):  # Draw the pregame information
             self.__max_scroll_x(layout.coords("pregame.scrolling_text"))
             pregame = Pregame(game, self.data.config.time_format)
             pos = pregamerender.render_pregame(self.canvas, layout, colors, pregame, self.scrolling_text_pos)
             self.__update_scrolling_text_pos(pos, self.canvas.width)
 
-        elif Status.is_complete(game.status()):  # Draw the game summary
+        elif status.is_complete(game.status()):  # Draw the game summary
             self.__max_scroll_x(layout.coords("final.scrolling_text"))
             final = Postgame(game)
             pos = postgamerender.render_postgame(
@@ -127,7 +127,7 @@ class MainRenderer:
             )
             self.__update_scrolling_text_pos(pos, self.canvas.width)
 
-        elif Status.is_irregular(game.status()):  # Draw game status
+        elif status.is_irregular(game.status()):  # Draw game status
             short_text = (self.data.config.layout.coords("status.text")["short_text"],)
             if scoreboard.get_text_for_reason():
                 self.__max_scroll_x(layout.coords("status.scrolling_text"))

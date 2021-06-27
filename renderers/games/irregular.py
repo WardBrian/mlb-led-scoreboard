@@ -6,7 +6,7 @@ except ImportError:
 from data.config.color import Color
 from data.config.layout import Layout
 from data.scoreboard import Scoreboard
-from data.status import Status
+from data import status
 from renderers import scrollingtext
 from utils import center_text_position
 
@@ -62,15 +62,15 @@ def __get_text_for_status(scoreboard, short_text):
     if "review" in text:
         return UMPIRE_REVIEW_SHORTHAND
 
-    if text == Status.DELAYED_START:
-        return Status.DELAYED
+    if text == status.DELAYED_START:
+        return status.DELAYED
 
     return text
 
 
 def __get_short_text(text):
     if "delayed" in text.lower():
-        return Status.DELAYED
+        return status.DELAYED
     if "postponed" in text.lower():
         return POSTPONED_SHORTHAND
     if "cancelled" in text.lower():
