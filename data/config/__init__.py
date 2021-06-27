@@ -159,11 +159,11 @@ class Config:
         self.rotation_rates_final = self.rotation_rates.get("final", DEFAULT_ROTATE_RATES["final"])
         self.rotation_rates_pregame = self.rotation_rates.get("pregame", DEFAULT_ROTATE_RATES["pregame"])
 
-    def rotate_rate_for_status(self, status):
+    def rotate_rate_for_status(self, game_status):
         rotate_rate = self.rotation_rates_live
-        if status.is_pregame(status):
+        if status.is_pregame(game_status):
             rotate_rate = self.rotation_rates_pregame
-        if status.is_complete(status):
+        if status.is_complete(game_status):
             rotate_rate = self.rotation_rates_final
         return rotate_rate
 
