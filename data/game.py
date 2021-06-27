@@ -198,7 +198,7 @@ class Game:
             return self._data["gameData"]["status"]["reason"]
         except:
             try:
-                return self._data["gameData"]["status"]["detailedState"].split(":")[1]
+                return self._data["gameData"]["status"]["detailedState"].split(":")[1].strip()
             except:
                 return None
 

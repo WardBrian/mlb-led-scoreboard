@@ -172,8 +172,6 @@ class MainRenderer:
                 self.animation_time = 0
 
             loop_point = self.data.config.layout.coords("atbat")["loop"]
-            # TODO this is odd, uses status
-            self.__max_scroll_x(layout.coords("status.scrolling_text"))
             self.scrolling_text_pos = min(self.scrolling_text_pos, loop_point)
             pos = gamerender.render_live_game(
                 self.canvas, layout, colors, scoreboard, self.scrolling_text_pos, self.animation_time
@@ -187,11 +185,8 @@ class MainRenderer:
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def __max_scroll_x(self, scroll_coords):
-        scroll_coords = self.data.config.layout.coords("final.scrolling_text")
         scroll_max_x = scroll_coords["x"] + scroll_coords["width"]
-        if self.scrolling_text_pos > scroll_max_x:
-            self.scrolling_text_pos = scroll_max_x
-        return scroll_max_x
+        self.scrolling_text_pos = min(scroll_max_x, self.scrolling_text_pos)
 
     def __update_scrolling_text_pos(self, new_pos, end):
         """Updates the position of the probable starting pitcher text."""
