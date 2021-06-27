@@ -10,8 +10,8 @@ from data.scoreboard.atbat import AtBat
 from data.scoreboard.bases import Bases
 from data.scoreboard.inning import Inning
 from data.scoreboard.pitches import Pitches
-from renderers.games import nohitter
 from renderers import scrollingtext
+from renderers.games import nohitter
 
 
 def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboard, text_pos, animation_time):

@@ -3,9 +3,9 @@ import os
 import sys
 
 import debug
+from data import status
 from data.config.color import Color
 from data.config.layout import Layout
-from data import status
 from utils import deep_update, get_file
 
 SCROLLING_SPEEDS = [0.3, 0.2, 0.1, 0.075, 0.05, 0.025, 0.01]

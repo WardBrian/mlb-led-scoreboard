@@ -2,17 +2,16 @@ import time
 from typing import NoReturn
 
 import debug
+from data import status
 from data.scoreboard import Scoreboard
 from data.scoreboard.postgame import Postgame
 from data.scoreboard.pregame import Pregame
-from data import status
-from renderers import network, offday
+from renderers import network, offday, standings
 from renderers.games import game as gamerender
 from renderers.games import irregular
 from renderers.games import postgame as postgamerender
 from renderers.games import pregame as pregamerender
 from renderers.games import teams
-from renderers.standings import StandingsRenderer
 
 
 class MainRenderer:
@@ -23,6 +22,7 @@ class MainRenderer:
         self.scrolling_text_pos = self.canvas.width
         self.game_changed_time = time.time()
         self.animation_time = 0
+        self.standings_stat = "w"
 
     def render(self):
         screen = self.data.get_screen_type()
@@ -65,11 +65,38 @@ class MainRenderer:
     # Render the standings screen
     def __render_standings(self) -> NoReturn:
         if self.data.standings.divisions:
-            StandingsRenderer(self.matrix, self.canvas, self.data).render()
+            self.__draw_standings(True)
         else:
             # Out of season off days don't always return standings so fall back on the offday renderer
             debug.error("No standings data.  Falling back to off day.")
             self.__render_offday()
+
+    def __draw_standings(self, stick=False):
+        while stick or (self.data.config.standings_no_games and not self.data.schedule.games_live()):
+            standings.render_standings(
+                self.canvas,
+                self.data.config.layout,
+                self.data.config.scoreboard_colors,
+                self.data.standings,
+                self.standings_stat,
+            )
+
+            if self.data.network_issues:
+                network.render_network_error(self.canvas, self.data.config.layout, self.data.config.scoreboard_colors)
+
+            self.canvas = self.matrix.SwapOnVSync(self.canvas)
+
+            # we actually keep this logic on the render thread
+            if self.canvas.width > 32:
+                time.sleep(10)
+                self.data.standings.advance_to_next_standings()
+            else:
+                if self.standings_stat == "w":
+                    self.standings_stat = "l"
+                else:
+                    self.standings_stat = "w"
+                    self.data.standings.advance_to_next_standings()
+                time.sleep(5)
 
     # Renders a game screen based on it's status
     def __render_game(self) -> NoReturn:
@@ -77,9 +104,8 @@ class MainRenderer:
         refresh_rate = self.data.config.scrolling_speed
 
         while True:
-            if self.data.config.standings_no_games and not self.data.schedule.games_live():
-                # we know we aren't out of season so it should be ok to do this unconditionally
-                StandingsRenderer(self.matrix, self.canvas, self.data).render()
+            # we know we aren't out of season so it should be ok to do this unconditionally
+            self.__draw_standings()
 
             if self.game_changed_time < self.data.game_changed_time:
                 self.scrolling_text_pos = self.canvas.width

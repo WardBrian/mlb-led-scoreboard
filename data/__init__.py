@@ -3,13 +3,13 @@ from datetime import datetime, timedelta
 
 import data.config.layout as layout
 import debug
+from data import status
 from data.headlines import Headlines
 from data.schedule import Schedule
 from data.scoreboard import Scoreboard
 from data.scoreboard.postgame import Postgame
 from data.scoreboard.pregame import Pregame
 from data.standings import Standings
-from data import status
 from data.update import UpdateStatus
 from data.weather import Weather
 

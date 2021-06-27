@@ -4,8 +4,8 @@ import statsapi
 
 import data.teams
 import debug
-from data.game import Game
 from data import status
+from data.game import Game
 from data.update import UpdateStatus
 
 GAMES_REFRESH_RATE = 5 * 60

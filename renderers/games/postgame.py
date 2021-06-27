@@ -7,8 +7,8 @@ from data.config.color import Color
 from data.config.layout import Layout
 from data.scoreboard import Scoreboard
 from data.scoreboard.postgame import Postgame
-from renderers.games import nohitter
 from renderers import scrollingtext
+from renderers.games import nohitter
 from utils import center_text_position
 
 NORMAL_GAME_LENGTH = 9
