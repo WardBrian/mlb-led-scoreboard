@@ -24,9 +24,9 @@ UMPIRE_REVIEW_SHORTHAND = "Review"
 def render_irregular_status(canvas, layout: Layout, colors: Color, scoreboard: Scoreboard, short_text, text_pos=0):
     pos = 0
     if scoreboard.get_text_for_reason():
-        pos = __render_scroll_text()
+        pos = __render_scroll_text(canvas, layout, colors, scoreboard, text_pos)
 
-    __render_game_status()
+    __render_game_status(canvas, layout, colors, scoreboard, short_text)
 
     return pos
 

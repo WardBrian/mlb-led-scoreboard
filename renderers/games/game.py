@@ -14,7 +14,7 @@ from renderers.games import nohitter
 from renderers import scrollingtext
 
 
-def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboard, text_pos: int, animation_time: int):
+def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboard, text_pos, animation_time):
     pos = 0
 
     if scoreboard.inning.state == Inning.TOP or scoreboard.inning.state == Inning.BOTTOM:
