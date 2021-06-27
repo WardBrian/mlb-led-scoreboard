@@ -3,8 +3,7 @@ try:
 except ImportError:
     from RGBMatrixEmulator import graphics
 
-from RGBMatrixEmulator.graphics.color import Color
-
+from data.config.color import Color
 from data.config.layout import Layout
 from data.standings import Standings
 from utils import center_text_position
