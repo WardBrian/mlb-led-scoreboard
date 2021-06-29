@@ -13,9 +13,8 @@ DEFAULT_SCROLLING_SPEED = 2
 DEFAULT_ROTATE_RATE = 15.0
 MINIMUM_ROTATE_RATE = 2.0
 DEFAULT_ROTATE_RATES = {"live": DEFAULT_ROTATE_RATE, "final": DEFAULT_ROTATE_RATE, "pregame": DEFAULT_ROTATE_RATE}
-DEFAULT_PREFERRED_TEAMS = ["Cubs"]
-DEFAULT_PREFERRED_DIVISIONS = ["NL Central"]
-
+DEFAULT_PREFERRED_TEAMS = ["Angels","Astros","Athletics","Blue Jays","Braves","Brewers","Cardinals","Cubs","Diamondbacks","Dodgers","Giants","Indians","Mariners","Marlins","Mets","Nationals","Orioles","Padres","Phillies","Pirates","Rangers","Rays","Red Sox","Reds","Rockies","Royals","Tigers","Twins","White Sox","Yankees"]
+DEFAULT_PREFERRED_DIVISIONS = ["NL Central", "NL East", "NL West", "AL Central", "AL East", "AL West"]
 
 class Config:
     def __init__(self, filename_base, width, height):
@@ -100,9 +99,13 @@ class Config:
                 "Using default preferred_teams, {}".format(DEFAULT_PREFERRED_TEAMS)
             )
             self.preferred_teams = DEFAULT_PREFERRED_TEAMS
-        if isinstance(self.preferred_teams, str):
+        if isinstance(self.preferred_teams, list) and len(self.preferred_teams) == 0:
+            self.preferred_teams = DEFAULT_PREFERRED_TEAMS
+        if isinstance(self.preferred_teams, str) and len(self.preferred_teams) > 0:
             team = self.preferred_teams
             self.preferred_teams = [team]
+        if len(self.preferred_teams) == 0:
+            self.preferred_teams = DEFAULT_PREFERRED_TEAMS
 
     def check_preferred_divisions(self):
         if not isinstance(self.preferred_divisions, str) and not isinstance(self.preferred_divisions, list):
@@ -111,9 +114,17 @@ class Config:
                 "Using default preferred_divisions, {}".format(DEFAULT_PREFERRED_DIVISIONS)
             )
             self.preferred_divisions = DEFAULT_PREFERRED_DIVISIONS
-        if isinstance(self.preferred_divisions, str):
+        if isinstance(self.preferred_divisions, list) and len(self.preferred_divisions) == 0:
+            debug.warning(
+                "preferred_divisions should be an array of division names or a single division name string."
+                "Using default preferred_divisions, {}".format(DEFAULT_PREFERRED_DIVISIONS)
+            )
+            self.preferred_divisions = DEFAULT_PREFERRED_DIVISIONS
+        if isinstance(self.preferred_divisions, str) and len(self.preferred_divisions) > 0:
             division = self.preferred_divisions
             self.preferred_divisions = [division]
+        if len(self.preferred_divisions) == 0:
+            self.preferred_divisions = DEFAULT_PREFERRED_DIVISIONS
 
     def check_time_format(self):
         if self.time_format.lower() == "24h":
