@@ -1,7 +1,7 @@
 {
 	"preferred": {
-		"teams": ["Cubs"],
-		"divisions": ["NL Central"]
+		"teams": [],
+		"divisions": []
 	},
 	"news_ticker": {
 		"team_offday": true,
