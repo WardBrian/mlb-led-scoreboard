@@ -61,7 +61,7 @@ class Data:
         if not self.config.rotation_enabled:
             return False
 
-        stay_on_preferred_team = self.config.preferred_teams and not self.config.rotation_preferred_team_live_enabled
+        stay_on_preferred_team = not self.config.prefer_all_teams and self.config.preferred_teams and not self.config.rotation_preferred_team_live_enabled
         if not stay_on_preferred_team:
             return True
 
@@ -156,3 +156,4 @@ class Data:
         debug.log("Pre: %s", Pregame(self.current_game, self.config.time_format))
         debug.log("Live: %s", Scoreboard(self.current_game))
         debug.log("Final: %s", Postgame(self.current_game))
+        debug.log("Game Data: %s", self.current_game._data["gameData"]["game"])

@@ -23,6 +23,8 @@ class Config:
         # Preferred Teams/Divisions
         self.preferred_teams = json["preferred"]["teams"]
         self.preferred_divisions = json["preferred"]["divisions"]
+        self.prefer_all_teams = False
+        self.prefer_all_divisions = False
 
         # News Ticker
         self.news_ticker_team_offday = json["news_ticker"]["team_offday"]
@@ -103,11 +105,13 @@ class Config:
             self.preferred_teams = DEFAULT_PREFERRED_TEAMS
         if isinstance(self.preferred_teams, list) and len(self.preferred_teams) == 0:
             self.preferred_teams = DEFAULT_PREFERRED_TEAMS
+            self.prefer_all_teams = True
         if isinstance(self.preferred_teams, str) and len(self.preferred_teams) > 0:
             team = self.preferred_teams
             self.preferred_teams = [team]
         if len(self.preferred_teams) == 0:
             self.preferred_teams = DEFAULT_PREFERRED_TEAMS
+            self.prefer_all_teams = True
 
     def check_preferred_divisions(self):
         if not isinstance(self.preferred_divisions, str) and not isinstance(self.preferred_divisions, list):
