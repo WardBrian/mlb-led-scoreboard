@@ -6,6 +6,7 @@ import debug
 from data import Data
 from data.config import Config
 from renderers.main import MainRenderer
+#from renderers.loading import Loading
 from utils import args, led_matrix_options
 
 try:
@@ -24,6 +25,10 @@ SCRIPT_VERSION = "5.0.0-dev"
 
 def main(matrix):
 
+     #Riff to add loading screen here
+#    loading = Loading(matrix)
+#    loading.render()
+
     # Read scoreboard options from config.json if it exists
     config = Config("config", matrix.width, matrix.height)
     logger = logging.getLogger("mlbled")
@@ -35,9 +40,11 @@ def main(matrix):
     # Print some basic info on startup
     debug.info("%s - v%s (%sx%s)", SCRIPT_NAME, SCRIPT_VERSION, matrix.width, matrix.height)
 
+#    emulated = True
+
     if emulated:
         debug.log("rgbmatrix not installed, falling back to emulator!")
-        debug.log("Using RGBMatrixEmulator version %s", version.__version__)
+        #debug.log("Using RGBMatrixEmulator version %s", version.__version__)
     else:
         debug.log("Using rgbmatrix version %s", __version__)
 
@@ -50,6 +57,7 @@ def main(matrix):
     render.start()
 
     screen = data.get_screen_type()
+    debug.log("Main found " + screen);
     if screen == "news":
         __refresh_offday(render, data)
     elif screen == "standings":

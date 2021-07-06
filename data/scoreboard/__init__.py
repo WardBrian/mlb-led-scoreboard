@@ -14,8 +14,8 @@ class Scoreboard:
     """
 
     def __init__(self, game: Game):
-        self.away_team = Team(game.away_abbreviation(), game.away_score(), game.away_name())
-        self.home_team = Team(game.home_abbreviation(), game.home_score(), game.home_name())
+        self.away_team = Team(game.away_abbreviation(), game.away_score(), game.away_name(), game.away_hits(), game.away_errors())
+        self.home_team = Team(game.home_abbreviation(), game.home_score(), game.home_name(), game.away_hits(), game.away_errors())
         self.inning = Inning(game)
         self.bases = Bases(game)
         self.pitches = Pitches(game)
@@ -28,12 +28,22 @@ class Scoreboard:
         self.reason = game.reason()
 
         self.play_result = game.current_play_result()
+        self.play_result_description = game.current_play_result_description()
 
     def homerun(self):
         return self.play_result == "home_run"
 
     def strikeout(self):
         return self.play_result == "strikeout"
+
+    def fieldout(self):
+        return self.play_result == "field_out"
+
+    def inplay(self): 
+        return self.play_result is not None
+
+    def play_description(self):
+        return self.play_result_description
 
     def get_text_for_reason(self):
         if self.note:
@@ -47,7 +57,7 @@ class Scoreboard:
     def __str__(self):
         s = (
             "<{} {}> {} ({}) @ {} ({}); Status: {}; Inning: (Number: {};"
-            " State: {}); B:{} S:{} O:{}; P:{}; AB:{}; Bases: {};".format(
+            " State: {}); B:{} S:{} O:{}; P:{}; B:{}; Bases: {};".format(
                 self.__class__.__name__,
                 hex(id(self)),
                 self.away_team.abbrev,

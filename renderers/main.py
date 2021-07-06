@@ -137,6 +137,7 @@ class MainRenderer:
             scoreboard.home_team,
             scoreboard.away_team,
             self.data.config.full_team_names,
+            self.data.config.use_team_abbrev,
         )
 
         if status.is_pregame(game.status()):  # Draw the pregame information

@@ -10,6 +10,9 @@ from data.scoreboard.atbat import AtBat
 from data.scoreboard.bases import Bases
 from data.scoreboard.inning import Inning
 from data.scoreboard.pitches import Pitches
+
+import debug
+
 from renderers import scrollingtext
 from renderers.games import nohitter
 
@@ -20,7 +23,7 @@ def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboa
     if scoreboard.inning.state == Inning.TOP or scoreboard.inning.state == Inning.BOTTOM:
 
         pos = _render_at_bat(
-            canvas, layout, colors, scoreboard.atbat, text_pos, scoreboard.strikeout(), (animation_time // 6) % 2
+            canvas, layout, colors, scoreboard.atbat, text_pos, scoreboard.strikeout(), (animation_time // 6) % 2, scoreboard.play_result, scoreboard.play_description()
         )
 
         # Check if we're deep enough into a game and it's a no hitter or perfect game
@@ -42,12 +45,18 @@ def render_live_game(canvas, layout: Layout, colors: Color, scoreboard: Scoreboa
 
 
 # --------------- at-bat ---------------
-def _render_at_bat(canvas, layout, colors, atbat: AtBat, text_pos, strikeout, animation):
+def _render_at_bat(canvas, layout, colors, atbat: AtBat, text_pos, strikeout, animation, play_result, play_result_description):
     plength = __render_pitcher_text(canvas, layout, colors, atbat.pitcher, text_pos)
+    
     if strikeout:
         if animation:
             __render_strikeout(canvas, layout, colors)
         return plength
+
+    elif play_result is not None and canvas.width > 32:
+        blength = __render_play_text(canvas, layout, colors, play_result_description, text_pos)
+        return blength
+
     else:
         blength = __render_batter_text(canvas, layout, colors, atbat.batter, text_pos)
         return max(plength, blength)
@@ -67,7 +76,7 @@ def __render_batter_text(canvas, layout, colors, batter, text_pos):
     bgcolor = colors.graphics_color("default.background")
     pos = scrollingtext.render_text(
         canvas,
-        coords["x"] + font["size"]["width"] * 3,
+        coords["x"] + font["size"]["width"] * 2,
         coords["y"],
         coords["width"],
         font,
@@ -76,9 +85,27 @@ def __render_batter_text(canvas, layout, colors, batter, text_pos):
         batter,
         text_pos,
     )
-    graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], color, "AB:")
+    graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], color, "B:")
     return pos
 
+def __render_play_text(canvas, layout, colors, play_description, text_pos):
+    coords = layout.coords("atbat.batter")
+    color = colors.graphics_color("atbat.batter")
+    font = layout.font("atbat.batter")
+    bgcolor = colors.graphics_color("default.background")
+    pos = scrollingtext.render_text(
+        canvas,
+        coords["x"] + font["size"]["width"],
+        coords["y"],
+        coords["width"],
+        font,
+        color,
+        bgcolor,
+        play_description,
+        text_pos,
+    )
+    #graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], color, "")
+    return pos
 
 def __render_pitcher_text(canvas, layout, colors, pitcher, text_pos):
     coords = layout.coords("atbat.pitcher")
