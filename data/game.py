@@ -11,7 +11,7 @@ API_FIELDS = (
     + "reason,probablePitchers,teams,home,away,abbreviation,teamName,players,id,boxscoreName,fullName,liveData,plays,"
     + "currentPlay,result,eventType,decisions,winner,loser,save,id,linescore,outs,balls,strikes,note,inningState,"
     + "currentInning,currentInningOrdinal,offense,batter,inHole,onDeck,first,second,third,defense,pitcher,boxscore,"
-    + "teams,runs,players,seasonStats,pitching,wins,losses,saves,era"
+    + "teams,runs,players,seasonStats,pitching,wins,losses,saves,era,description,hits,errors"
 )
 
 SCHEDULE_API_FIELDS = "dates,date,games,status,detailedState,abstractGameState,reason"
@@ -84,6 +84,18 @@ class Game:
 
     def away_score(self):
         return self._data["liveData"]["linescore"]["teams"]["away"].get("runs", 0)
+
+    def home_hits(self):
+        return self._data["liveData"]["linescore"]["teams"]["home"].get("hits", 0)
+
+    def away_hits(self):
+        return self._data["liveData"]["linescore"]["teams"]["away"].get("hits", 0)
+
+    def home_errors(self):
+        return self._data["liveData"]["linescore"]["teams"]["home"].get("errors", 0)
+
+    def away_errors(self):
+        return self._data["liveData"]["linescore"]["teams"]["away"].get("errors", 0)
 
     def winning_team(self):
         if self._status["abstractGameState"] == "Final":
@@ -222,6 +234,9 @@ class Game:
 
     def current_play_result(self):
         return self._data["liveData"]["plays"].get("currentPlay", {}).get("result", {}).get("eventType", None)
+    
+    def current_play_result_description(self):
+        return self._data["liveData"]["plays"].get("currentPlay", {}).get("result", {}).get("description", None)
 
     def __should_update(self):
         endtime = time.time()
