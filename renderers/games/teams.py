@@ -57,6 +57,10 @@ def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_t
     __render_team_text(canvas, layout, home_colors, home_team, "home", full_team_names, default_colors)
     __render_team_score(canvas, layout, away_colors, away_team.runs, "away", default_colors)
     __render_team_score(canvas, layout, home_colors, home_team.runs, "home", default_colors)
+    __render_team_hits(canvas, layout, away_colors, away_team.hits, "away", default_colors)
+    __render_team_hits(canvas, layout, home_colors, home_team.hits, "home", default_colors)
+    __render_team_errors(canvas, layout, away_colors, away_team.errors, "away", default_colors)
+    __render_team_errors(canvas, layout, home_colors, home_team.errors, "home", default_colors)
 
 
 def __team_colors(team_colors, team_abbrev):
@@ -86,3 +90,21 @@ def __render_team_score(canvas, layout, colors, runs, homeaway, default_colors):
     team_runs = str(runs)
     team_runs_x = coords["x"] - (len(team_runs) * font["size"]["width"])
     graphics.DrawText(canvas, font["font"], team_runs_x, coords["y"], text_color_graphic, team_runs)
+
+def __render_team_hits(canvas, layout, colors, hits, homeaway, default_colors):
+    text_color = colors.get("text", default_colors["text"])
+    text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
+    coords = layout.coords("teams.hits.{}".format(homeaway))
+    font = layout.font("teams.hits.{}".format(homeaway))
+    team_hits = str(hits)
+    team_hits_x = coords["x"] - (len(team_hits) * font["size"]["width"])
+    graphics.DrawText(canvas, font["font"], team_hits_x, coords["y"], text_color_graphic, team_hits)
+
+def __render_team_errors(canvas, layout, colors, errors, homeaway, default_colors):
+    text_color = colors.get("text", default_colors["text"])
+    text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
+    coords = layout.coords("teams.errors.{}".format(homeaway))
+    font = layout.font("teams.errors.{}".format(homeaway))
+    team_errors = str(errors)
+    team_errors_x = coords["x"] - (len(team_errors) * font["size"]["width"])
+    graphics.DrawText(canvas, font["font"], team_errors_x, coords["y"], text_color_graphic, team_errors)
