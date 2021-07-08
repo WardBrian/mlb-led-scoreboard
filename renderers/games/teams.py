@@ -4,7 +4,7 @@ except ImportError:
     from RGBMatrixEmulator import graphics
 
 
-def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_team_names):
+def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_team_names, use_team_abbrev):
     default_colors = team_colors.color("default")
 
     away_colors = __team_colors(team_colors, away_team.abbrev)
@@ -53,8 +53,8 @@ def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_t
                 y_offset = accent_coords[team]["y"]
                 canvas.SetPixel(x + x_offset, y + y_offset, color["r"], color["g"], color["b"])
 
-    __render_team_text(canvas, layout, away_colors, away_team, "away", full_team_names, default_colors)
-    __render_team_text(canvas, layout, home_colors, home_team, "home", full_team_names, default_colors)
+    __render_team_text(canvas, layout, away_colors, away_team, "away", full_team_names, default_colors, use_team_abbrev)
+    __render_team_text(canvas, layout, home_colors, home_team, "home", full_team_names, default_colors, use_team_abbrev)
     __render_team_score(canvas, layout, away_colors, away_team.runs, "away", default_colors)
     __render_team_score(canvas, layout, home_colors, home_team.runs, "home", default_colors)
     __render_team_hits(canvas, layout, away_colors, away_team.hits, "away", default_colors)
@@ -71,14 +71,17 @@ def __team_colors(team_colors, team_abbrev):
     return team_colors
 
 
-def __render_team_text(canvas, layout, colors, team, homeaway, full_team_names, default_colors):
+def __render_team_text(canvas, layout, colors, team, homeaway, full_team_names, default_colors, use_team_abbrev):
     text_color = colors.get("text", default_colors["text"])
     text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
     coords = layout.coords("teams.name.{}".format(homeaway))
     font = layout.font("teams.name.{}".format(homeaway))
     team_text = "{:3s}".format(team.abbrev.upper())
-    if full_team_names and canvas.width > 32:
+    
+    if not use_team_abbrev and full_team_names and canvas.width > 32:
         team_text = "{:13s}".format(team.name)
+    else:
+        team_text = team.abbrev
     graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], text_color_graphic, team_text)
 
 
