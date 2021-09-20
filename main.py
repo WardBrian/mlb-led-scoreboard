@@ -52,7 +52,10 @@ def main(matrix):
 
     # Draw startup screen
     logo = "assets/mlb-w" + str(matrix.width) + "h" + str(matrix.height) + ".png"
-    if os.path.exists(logo):
+
+    # MLB image disabled when using renderer, for now.
+    # see: https://github.com/ty-porter/RGBMatrixEmulator/issues/9#issuecomment-922869679
+    if os.path.exists(logo) and not emulated:
         logo = Image.open(logo)
         matrix.SetImage(logo.convert("RGB"))
         logo.close()
