@@ -134,11 +134,19 @@ def args():
         default=0,
         type=int,
     )
+    parser.add_argument(
+        "--config",
+        action="store",
+        help="Base file name for config file. Can use relative path, e.g. config/rockies.config",
+        default="config",
+        type=str,
+    )
     return parser.parse_args()
 
 
 def led_matrix_options(args):
     options = RGBMatrixOptions()
+    print(options)
 
     if args.led_gpio_mapping is not None:
         options.hardware_mapping = args.led_gpio_mapping
@@ -153,6 +161,7 @@ def led_matrix_options(args):
     options.brightness = args.led_brightness
     options.pwm_lsb_nanoseconds = args.led_pwm_lsb_nanoseconds
     options.led_rgb_sequence = args.led_rgb_sequence
+    options.config_base = args.config
     try:
         options.pixel_mapper_config = args.led_pixel_mapper
     except AttributeError:

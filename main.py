@@ -34,7 +34,7 @@ SCRIPT_VERSION = "5.0.0-dev"
 def main(matrix):
 
     # Read scoreboard options from config.json if it exists
-    config = Config("config", matrix.width, matrix.height)
+    config = Config(matrix.options.config_base, matrix.width, matrix.height)
     logger = logging.getLogger("mlbled")
     if config.debug:
         logger.setLevel(logging.DEBUG)
