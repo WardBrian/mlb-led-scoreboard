@@ -7,12 +7,15 @@ import debug
 from data import status
 from data.game import Game
 from data.update import UpdateStatus
+from datetime import timedelta
 
 GAMES_REFRESH_RATE = 5 * 60
 
 
 class Schedule:
     def __init__(self, date, config):
+        date -= timedelta(hours=4)
+
         self.date = date.strftime("%Y-%m-%d")
         self.config = config
         self.starttime = time.time()
