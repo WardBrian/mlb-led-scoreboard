@@ -31,10 +31,10 @@ SCRIPT_NAME = "MLB LED Scoreboard"
 SCRIPT_VERSION = "5.0.0-dev"
 
 
-def main(matrix):
+def main(matrix, config_base):
 
     # Read scoreboard options from config.json if it exists
-    config = Config(matrix.options.config_base, matrix.width, matrix.height)
+    config = Config(config_base, matrix.width, matrix.height)
     logger = logging.getLogger("mlbled")
     if config.debug:
         logger.setLevel(logging.DEBUG)
@@ -134,12 +134,13 @@ def __render_main(matrix, data):
 
 if __name__ == "__main__":
     # Check for led configuration arguments
-    matrixOptions = led_matrix_options(args())
+    command_line_args = args()
+    matrixOptions = led_matrix_options(command_line_args)
 
     # Initialize the matrix
     matrix = RGBMatrix(options=matrixOptions)
     try:
-        main(matrix)
+        main(matrix, command_line_args.config)
     except Exception:
         debug.exception("Untrapped error in main!")
         raise
