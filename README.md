@@ -131,6 +131,9 @@ A default `config.json.example` file is included for reference. Copy this file t
   "teams"                      Array   Pass an array of preferred teams. The first team in the list will be used as your 'favorite' team. Example: ["Cubs", "Brewers"]
   "divisions"                  Array   Pass an array of preferred divisions that will be rotated through in the order they are entered. Example: ["NL Central", "AL Central"]
 
+"games":                               Options for game screen display
+  "show_hits_errors"           Bool    Show runs/hits/errors instead of just runs.
+  
 "news_ticker":                         Options for displaying a nice clock/weather/news ticker screen
   "always_display"             Bool    Display the news ticker screen at all times (supercedes the standings setting)
   "team_offday"                Bool    Display the news ticker when your prefered team is on an offday
