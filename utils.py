@@ -146,7 +146,6 @@ def args():
 
 def led_matrix_options(args):
     options = RGBMatrixOptions()
-    print(options)
 
     if args.led_gpio_mapping is not None:
         options.hardware_mapping = args.led_gpio_mapping
