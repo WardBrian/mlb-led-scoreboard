@@ -174,7 +174,7 @@ class Config:
         if os.path.isfile(path):
             j = json.load(open(path))
         else:
-            debug.log(f"Could not find json file {filename}.  Skipping.")
+            debug.warning(f"Could not find json file {filename}.  Skipping.")
         return j
 
     # example config is a "base config" which always gets read.
