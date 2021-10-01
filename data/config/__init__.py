@@ -6,7 +6,7 @@ import debug
 from data import status
 from data.config.color import Color
 from data.config.layout import Layout
-from utils import deep_update, get_file
+from utils import deep_update
 
 SCROLLING_SPEEDS = [0.3, 0.2, 0.1, 0.075, 0.05, 0.025, 0.01]
 DEFAULT_SCROLLING_SPEED = 2
@@ -167,14 +167,13 @@ class Config:
             rotate_rate = self.rotation_rates_final
         return rotate_rate
 
-    def read_json(self, filename):
+    def read_json(self, path):
         """Read a file expected to contain valid json.  If file not present return empty data.  Exception if json invalid."""
         j = {}
-        path = get_file(filename)
         if os.path.isfile(path):
             j = json.load(open(path))
         else:
-            debug.warning(f"Could not find json file {filename}.  Skipping.")
+            debug.warning(f"Could not find json file {path}.  Skipping.")
         return j
 
     # example config is a "base config" which always gets read.
