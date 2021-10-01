@@ -11,7 +11,7 @@
 		"mlb_news": true,
 		"countdowns": true,
 		"date": true,
-		"date_format": "%A, %B %d"
+		"date_format": "%A, %B %-d"
 	},
 	"standings": {
 		"team_offday": false,
