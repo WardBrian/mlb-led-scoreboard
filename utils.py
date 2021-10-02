@@ -148,7 +148,7 @@ def led_matrix_options(args):
     options.brightness = args.led_brightness
     options.pwm_lsb_nanoseconds = args.led_pwm_lsb_nanoseconds
     options.led_rgb_sequence = args.led_rgb_sequence
-    
+
     try:
         options.pixel_mapper_config = args.led_pixel_mapper
     except AttributeError:

@@ -177,10 +177,10 @@ class Config:
         return j
 
     # example config is a "base config" which always gets read.
-    # our "custom" config contains overrides. 
+    # our "custom" config contains overrides.
     def __get_config(self, base_filename):
         filename = "{}.json".format(base_filename)
-        reference_filename = "config.json.example"  # always use this filename. 
+        reference_filename = "config.json.example"  # always use this filename.
         reference_config = self.read_json(reference_filename)
         custom_config = self.read_json(filename)
         if custom_config:
