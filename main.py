@@ -140,7 +140,8 @@ if __name__ == "__main__":
     # Initialize the matrix
     matrix = RGBMatrix(options=matrixOptions)
     try:
-        main(matrix, command_line_args.config)
+        config, _ = os.path.splitext(command_line_args.config)
+        main(matrix, config)
     except Exception:
         debug.exception("Untrapped error in main!")
         raise
