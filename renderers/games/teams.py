@@ -56,14 +56,22 @@ def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_t
     __render_team_text(canvas, layout, away_colors, away_team, "away", full_team_names, default_colors)
     __render_team_text(canvas, layout, home_colors, home_team, "home", full_team_names, default_colors)
 
-    # these are used for alignment
+    # Number of pixels needed for each score.
+    w = layout.font(f"teams.runs.home")["size"]["width"]
     score_spacing = {
-        "runs": len(str(max(away_team.runs, home_team.runs))),
-        "hits": len(str(max(away_team.hits, home_team.hits))),
-        "errors": len(str(max(away_team.errors, home_team.errors))),
+        "runs": max(calc_width(away_team.runs, w), calc_width(home_team.runs, w)),
+        "hits": max(calc_width(away_team.hits, w), calc_width(home_team.hits, w)),
+        "errors": max(calc_width(away_team.errors, w), calc_width(home_team.errors, w)),
     }
     __render_team_score(canvas, layout, away_colors, away_team, "away", default_colors, score_spacing, show_hits_errors)
     __render_team_score(canvas, layout, home_colors, home_team, "home", default_colors, score_spacing, show_hits_errors)
+
+
+def calc_width(score, font_width):
+    pixels = len(str(score)) * font_width
+    if 9 < score < 20:
+        pixels -= 1  # Adjust slightly for 10's.
+    return pixels
 
 
 def __team_colors(team_colors, team_abbrev):
@@ -86,37 +94,28 @@ def __render_team_text(canvas, layout, colors, team, homeaway, full_team_names, 
 
 
 def __render_score_component(canvas, layout, colors, homeaway, default_colors, coords, component_val, width):
-    # return actual calculated x coord.
+    # The coords passed in are the rightmost pixel.
+    RHE_SPACING = 3  # Number of pixels between runs/hits and hits/errors.
     text_color = colors.get("text", default_colors["text"])
     text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
-    font = layout.font(f"teams.runs.{homeaway}")  # just use the runs font
+    font = layout.font(f"teams.runs.{homeaway}")
     component_val = str(component_val)
-    std_spacing = True
-    for i in range(width):
-        score_x = coords["x"] - font["size"]["width"] + 1
-        coords["x"] = score_x
-        if len(component_val) > i:
-            c = component_val[len(component_val) - i - 1]
-            graphics.DrawText(canvas, font["font"], score_x, coords["y"], text_color_graphic, c)
-    return score_x - 1
+    # Draw each digit from right to left.
+    for i, c in enumerate(component_val[::-1]):
+        char_draw_x = coords["x"] - font["size"]["width"] * (i + 1)  # Determine character position
+        if c == "1" and i == 1:
+            char_draw_x += 1  # Adjust slightly for 10's.
+        graphics.DrawText(canvas, font["font"], char_draw_x, coords["y"], text_color_graphic, c)
+    coords["x"] -= width + RHE_SPACING - 1  # adjust coordinates for next score.
 
 
 def __render_team_score(canvas, layout, colors, team, homeaway, default_colors, score_spacing, show_hits_errors):
+    coords = layout.coords(f"teams.runs.{homeaway}").copy()
     if show_hits_errors:
-        coords = layout.coords(f"teams.runs.{homeaway}").copy()
-        x_calc = __render_score_component(
+        __render_score_component(
             canvas, layout, colors, homeaway, default_colors, coords, team.errors, score_spacing["errors"]
         )
-        coords["x"] = x_calc - 2
-        x_calc = __render_score_component(
+        __render_score_component(
             canvas, layout, colors, homeaway, default_colors, coords, team.hits, score_spacing["hits"]
         )
-        coords["x"] = x_calc - 2
-        x_calc = __render_score_component(
-            canvas, layout, colors, homeaway, default_colors, coords, team.runs, score_spacing["runs"]
-        )
-    else:
-        coords = layout.coords(f"teams.runs.{homeaway}").copy()
-        __render_score_component(
-            canvas, layout, colors, homeaway, default_colors, coords, team.runs, score_spacing["runs"]
-        )
+    __render_score_component(canvas, layout, colors, homeaway, default_colors, coords, team.runs, score_spacing["runs"])
