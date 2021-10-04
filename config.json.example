@@ -3,9 +3,6 @@
 		"teams": ["Cubs"],
 		"divisions": ["NL Central"]
 	},
-	"game": {
-		"show_hits_errors": false
-	},
 	"news_ticker": {
 		"team_offday": true,
 		"always_display": false,

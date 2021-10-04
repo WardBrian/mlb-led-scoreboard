@@ -25,9 +25,6 @@ class Config:
         self.preferred_teams = json["preferred"]["teams"]
         self.preferred_divisions = json["preferred"]["divisions"]
 
-        # Game Screen Display
-        self.show_hits_errors = json["game"]["show_hits_errors"]
-
         # News Ticker
         self.news_ticker_team_offday = json["news_ticker"]["team_offday"]
         self.news_ticker_always_display = json["news_ticker"]["always_display"]

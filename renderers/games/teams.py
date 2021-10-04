@@ -4,7 +4,7 @@ except ImportError:
     from RGBMatrixEmulator import graphics
 
 
-def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_team_names, show_hits_errors):
+def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_team_names):
     default_colors = team_colors.color("default")
 
     away_colors = __team_colors(team_colors, away_team.abbrev)
@@ -62,8 +62,8 @@ def render_team_banner(canvas, layout, team_colors, home_team, away_team, full_t
         "hits": max(len(str(away_team.hits)), len(str(home_team.hits))),
         "errors": max(len(str(away_team.errors)), len(str(home_team.errors))),
     }
-    __render_team_score(canvas, layout, away_colors, away_team, "away", default_colors, score_spacing, show_hits_errors)
-    __render_team_score(canvas, layout, home_colors, home_team, "home", default_colors, score_spacing, show_hits_errors)
+    __render_team_score(canvas, layout, away_colors, away_team, "away", default_colors, score_spacing)
+    __render_team_score(canvas, layout, home_colors, home_team, "home", default_colors, score_spacing)
 
 
 def __team_colors(team_colors, team_abbrev):
@@ -89,20 +89,26 @@ def __render_score_component(canvas, layout, colors, homeaway, default_colors, c
     # The coords passed in are the rightmost pixel.
     font = layout.font(f"teams.runs.{homeaway}")
     font_width = font["size"]["width"]
-    rhe_spacing = font_width - 2  # Number of pixels between runs/hits and hits/errors.
+    # Number of pixels between runs/hits and hits/errors.
+    rhe_spacing = layout.coords(f"teams.runs.runs_hits_errors.spacing")  
     text_color = colors.get("text", default_colors["text"])
     text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
     component_val = str(component_val)
+    compress_digits = layout.coords(f"teams.runs.runs_hits_errors.compress_digits")
     # Draw each digit from right to left.
     for i, c in enumerate(component_val[::-1]):
+        if i > 0 and compress_digits:
+            coords["x"] += 1
         char_draw_x = coords["x"] - font_width * (i + 1)  # Determine character position
         graphics.DrawText(canvas, font["font"], char_draw_x, coords["y"], text_color_graphic, c)
-    coords["x"] -= font_width * width_chars + rhe_spacing  # adjust coordinates for next score.
+    if compress_digits:
+        coords["x"] += width_chars - len(component_val) # adjust for compaction on values not rendered        
+    coords["x"] -= font_width * width_chars + rhe_spacing - 1 # adjust coordinates for next score.
 
 
-def __render_team_score(canvas, layout, colors, team, homeaway, default_colors, score_spacing, show_hits_errors):
+def __render_team_score(canvas, layout, colors, team, homeaway, default_colors, score_spacing):
     coords = layout.coords(f"teams.runs.{homeaway}").copy()
-    if show_hits_errors:
+    if layout.coords(f"teams.runs.runs_hits_errors.show"):
         __render_score_component(
             canvas, layout, colors, homeaway, default_colors, coords, team.errors, score_spacing["errors"]
         )
