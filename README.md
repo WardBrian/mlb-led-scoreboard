@@ -174,7 +174,7 @@ A default `config.json.example` file is included for reference. Copy this file t
 ```
 
 ### Additional Features
-* Runs/Hits/Errors - Hits are always shown on the games screen, but you can enable or adjust spacing of a "runs, hits, errors" display.  Take a look at the [coordinates readme file](/coordinates/README.md) for details. 
+* Runs/Hits/Errors - Runs are always shown on the games screen, but you can enable or adjust spacing of a "runs, hits, errors" display.  Take a look at the [coordinates readme file](/coordinates/README.md) for details. 
 
 ### Flags
 
