@@ -90,7 +90,7 @@ def __render_score_component(canvas, layout, colors, homeaway, default_colors, c
     font = layout.font(f"teams.runs.{homeaway}")
     font_width = font["size"]["width"]
     # Number of pixels between runs/hits and hits/errors.
-    rhe_spacing = layout.coords(f"teams.runs.runs_hits_errors.spacing")  
+    rhe_spacing = layout.coords(f"teams.runs.runs_hits_errors.spacing")
     text_color = colors.get("text", default_colors["text"])
     text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
     component_val = str(component_val)
@@ -102,8 +102,8 @@ def __render_score_component(canvas, layout, colors, homeaway, default_colors, c
         char_draw_x = coords["x"] - font_width * (i + 1)  # Determine character position
         graphics.DrawText(canvas, font["font"], char_draw_x, coords["y"], text_color_graphic, c)
     if compress_digits:
-        coords["x"] += width_chars - len(component_val) # adjust for compaction on values not rendered        
-    coords["x"] -= font_width * width_chars + rhe_spacing - 1 # adjust coordinates for next score.
+        coords["x"] += width_chars - len(component_val)  # adjust for compaction on values not rendered
+    coords["x"] -= font_width * width_chars + rhe_spacing - 1  # adjust coordinates for next score.
 
 
 def __render_team_score(canvas, layout, colors, team, homeaway, default_colors, score_spacing):
