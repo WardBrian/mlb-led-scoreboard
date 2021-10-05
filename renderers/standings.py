@@ -18,7 +18,7 @@ def get_standings_color_node(colors, node_name, league):
 
 
 def render_standings(canvas, layout: Layout, colors: Color, standings: Standings, stat):
-    league = standings.preferred_divisions[standings.current_division_index].split()[0].lower()
+    league = standings.current_standings()[:2].lower() # al or nl
     __fill_bg(canvas, layout, colors, league)
     if canvas.width > 32:
         __render_static_wide_standings(canvas, layout, colors, standings, league)
