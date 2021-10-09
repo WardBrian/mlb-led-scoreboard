@@ -145,5 +145,8 @@ if __name__ == "__main__":
     except Exception:
         debug.exception("Untrapped error in main!")
         raise
+    except KeyboardInterrupt:
+        debug.exception("Control-C pressed!")
+        sys.exit(1)
     finally:
         matrix.Clear()
