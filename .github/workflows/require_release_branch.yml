@@ -14,11 +14,11 @@ jobs:
           exit 1
           
       - uses: actions/checkout@v3
-        if: github.base_ref == 'main'
+        if: github.base_ref == 'master'
         with:
           fetch-depth: 0
           
       - name: Check version.py
-        if: github.base_ref == 'main'
+        if: github.base_ref == 'master'
         run: |
-          git diff --name-only origin/main | grep -q version.py || (echo "Need to change version for pushes to master!" && exit 1)
+          git diff --name-only origin/master | grep -q version.py || (echo "Need to change version for pushes to master!" && exit 1)
