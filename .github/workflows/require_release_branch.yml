@@ -21,4 +21,4 @@ jobs:
       - name: Check version.py
         if: github.base_ref == 'main'
         run: |
-          git diff --name-only main
+          git diff --name-only origin/main
