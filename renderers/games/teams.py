@@ -1,5 +1,6 @@
 from driver import graphics
 
+
 def render_team_banner(
     canvas, layout, team_colors, home_team, away_team, full_team_names, short_team_names_for_runs_hits, show_score,
 ):
@@ -67,6 +68,9 @@ def render_team_banner(
         }
         __render_team_score(canvas, layout, away_colors, away_team, "away", default_colors, score_spacing)
         __render_team_score(canvas, layout, home_colors, home_team, "home", default_colors, score_spacing)
+    else:
+        __render_team_record(canvas, layout, away_colors, away_team, "away", default_colors)
+        __render_team_record(canvas, layout, home_colors, home_team, "home", default_colors)
 
 
 def can_use_full_team_names(canvas, enabled, abbreviate_on_overflow, teams):
@@ -141,3 +145,13 @@ def __render_team_score(canvas, layout, colors, team, homeaway, default_colors, 
             canvas, layout, colors, homeaway, default_colors, coords, team.hits, score_spacing["hits"]
         )
     __render_score_component(canvas, layout, colors, homeaway, default_colors, coords, team.runs, score_spacing["runs"])
+
+
+def __render_team_record(canvas, layout, colors, team, homeaway, default_colors):
+    coords = layout.coords(f"teams.record.{homeaway}")
+    if layout.coords("teams.record")["show_pregame"]:
+        font = layout.font(f"teams.record.{homeaway}")
+        text_color = colors.get("text", default_colors["text"])
+        text_color_graphic = graphics.Color(text_color["r"], text_color["g"], text_color["b"])
+        record_text = "({}-{})".format(*team.record)
+        graphics.DrawText(canvas, font["font"], coords["x"], coords["y"], text_color_graphic, record_text)

@@ -39,7 +39,6 @@ class Postgame:
 
         self.series_status = game.series_status()
 
-
     def __str__(self):
         return "<{} {}> W: {} {}-{}; L: {} {}-{}; S: {} ({})".format(
             self.__class__.__name__,

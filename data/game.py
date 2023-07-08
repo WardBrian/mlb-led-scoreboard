@@ -10,11 +10,11 @@ from data.delay_buffer import CircularQueue
 
 API_FIELDS = (
     "gameData,game,id,datetime,dateTime,officialDate,flags,noHitter,perfectGame,status,detailedState,abstractGameState,"
-    + "reason,probablePitchers,teams,home,away,abbreviation,teamName,players,id,boxscoreName,fullName,liveData,plays,"
-    + "currentPlay,result,eventType,playEvents,isPitch,pitchData,startSpeed,details,type,code,description,decisions,"
-    + "winner,loser,save,id,linescore,outs,balls,strikes,note,inningState,currentInning,currentInningOrdinal,offense,"
-    + "batter,inHole,onDeck,first,second,third,defense,pitcher,boxscore,teams,runs,players,seasonStats,pitching,wins,"
-    + "losses,saves,era,hits,errors,stats,pitching,numberOfPitches,weather,condition,temp,wind"
+    "reason,probablePitchers,teams,home,away,abbreviation,teamName,record,players,id,boxscoreName,fullName,liveData,"
+    "plays,currentPlay,result,eventType,playEvents,isPitch,pitchData,startSpeed,details,type,code,description,decisions,"
+    "winner,loser,save,id,linescore,outs,balls,strikes,note,inningState,currentInning,currentInningOrdinal,offense,"
+    "batter,inHole,onDeck,first,second,third,defense,pitcher,boxscore,teams,runs,players,seasonStats,pitching,wins,"
+    "losses,saves,era,hits,errors,stats,pitching,numberOfPitches,weather,condition,temp,wind"
 )
 
 SCHEDULE_API_FIELDS = "dates,date,games,status,detailedState,abstractGameState,reason"
@@ -89,6 +89,11 @@ class Game:
     def home_abbreviation(self):
         return self._current_data["gameData"]["teams"]["home"]["abbreviation"]
 
+    def home_record(self):
+        wins = self._current_data["gameData"]["teams"]["home"].get("record", {}).get("wins", 0)
+        losses = self._current_data["gameData"]["teams"]["home"].get("record", {}).get("losses", 0)
+        return (wins, losses)
+
     def pregame_weather(self):
         try:
             wx = (
@@ -109,6 +114,11 @@ class Game:
 
     def away_abbreviation(self):
         return self._current_data["gameData"]["teams"]["away"]["abbreviation"]
+
+    def away_record(self):
+        wins = self._current_data["gameData"]["teams"]["away"].get("record", {}).get("wins", 0)
+        losses = self._current_data["gameData"]["teams"]["away"].get("record", {}).get("losses", 0)
+        return (wins, losses)
 
     def status(self):
         return self._status["detailedState"]

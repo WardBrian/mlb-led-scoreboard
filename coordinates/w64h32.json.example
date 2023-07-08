@@ -277,6 +277,17 @@
         "x": 62,
         "y": 13
       }
+    },
+    "record": {
+      "show_pregame": true,
+      "away": {
+        "x": 37,
+        "y": 7
+      },
+      "home": {
+        "x": 37,
+        "y": 16
+      }
     }
   },
   "offday": {
