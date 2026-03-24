@@ -126,7 +126,7 @@
       const refParser = new Jedison.RefParser();
 
       const init = async () => {
-        const resp = await fetch("https://raw.githubusercontent.com/WardBrian/mlb-led-scoreboard/refs/heads/rotation-rework-config/config.schema.json");
+        const resp = await fetch("https://raw.githubusercontent.com/MLB-LED-Scoreboard/mlb-led-scoreboard/refs/heads/dev/config.schema.json");
         const schema = await resp.json();
 
         await refParser.dereference(schema);
