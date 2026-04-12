@@ -30,6 +30,4 @@ jobs:
         with:
           images: "team_colors.png"
           upload_to: imgur
-          custom_attachment_msg: "Team colors changed in this PR! Preview:"
-          edit_previous_comment: true
           github_token: ${{ secrets.MY_GITHUB_TOKEN }}
