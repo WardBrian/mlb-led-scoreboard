@@ -9,7 +9,8 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 from RGBMatrixEmulator.internal.emulator_config import RGBMatrixEmulatorConfig
 
-from data.config import Config, Layout
+from data.config import Config
+from data.config.layout import Config
 from data.teams import TEAM_ID_ABBR
 from data.scoreboard.team import Team
 from data.uniforms import CITY_CONNECT
