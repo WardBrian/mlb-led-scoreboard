@@ -25,9 +25,11 @@ jobs:
           export RGBME_SUPPRESS_ADAPTER_LOAD_ERRORS=1
           python ./tests/display_team_colors.py save
 
-      - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@main
-        with:
-          images: "team_colors.png"
-          upload_to: imgur
-          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Comment image
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          filepath="./team_colors.png"
+          image_link=$(curl -X POST "https://api.imgur.com/3/upload" \
+            -F "image=@\"$filepath\"" | jq ".data.link" -r)
+          gh pr comment ${{ github.event.pull_request.number }} --body "Team colors changed in this PR! Preview: ![Team Colors]($image_link)"
