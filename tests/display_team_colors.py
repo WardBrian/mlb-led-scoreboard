@@ -76,7 +76,7 @@ if __name__ == "__main__":
     canvas = matrix.CreateFrameCanvas()
     canvas = draw_teams(canvas, config)
     if save:
-        canvas.display_adapter._dump_screenshot("team_colors.png")
+        canvas.display_adapter._dump_screenshot("team_colors.jpg")
     else:
         while True:
             try:

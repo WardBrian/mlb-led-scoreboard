@@ -1,8 +1,14 @@
 feedparser>=6.0.11
 MLB_StatsAPI>=1.9.0
 Pillow>=10.0.1,<12.0.0
+<<<<<<< Updated upstream
 pyowm==3.5.0
 RGBMatrixEmulator>=0.13.5
 setuptools; python_version >= "3.12"
+||||||| Stash base
+RGBMatrixEmulator>=0.13.5
+=======
+git+https://github.com/WardBrian/RGBMatrixEmulator@raw-adaptor-pixel-styles
+>>>>>>> Stashed changes
 tzlocal==4.2
 bdfparser
