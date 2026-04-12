@@ -1,0 +1,40 @@
+name: Python Unittest
+
+on:
+  pull_request:
+    branches: [dev, master]
+    paths:
+      - "colors/teams.example.json"
+      - "tests/display_team_colors.py"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+      - name: Test with unittest
+        run: |
+          export RGBME_SUPPRESS_ADAPTER_LOAD_ERRORS=1
+          python .\tests\display_team_colors.py save
+
+      - name: Upload team colors image
+        id: upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: team_colors.png
+          archive: false
+
+      - name: Comment on PR with team colors image
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "Team colors changed in this PR! Preview: ![Team Colors](${{ steps.upload.outputs.artifact-url }})"
