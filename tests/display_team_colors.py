@@ -10,7 +10,7 @@ from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 from RGBMatrixEmulator.internal.emulator_config import RGBMatrixEmulatorConfig
 
 from data.config import Config
-from data.config.layout import Config
+from data.config.layout import Layout
 from data.teams import TEAM_ID_ABBR
 from data.scoreboard.team import Team
 from data.uniforms import CITY_CONNECT
