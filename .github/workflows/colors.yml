@@ -26,7 +26,7 @@ jobs:
           python ./tests/display_team_colors.py save
 
       - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@upload_only
+        uses: opengisch/comment-pr-with-images@main
         with:
           images: "team_colors.png"
           upload_to: imgur
