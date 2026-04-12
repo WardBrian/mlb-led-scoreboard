@@ -30,7 +30,7 @@ jobs:
         id: upload
         uses: actions/upload-artifact@v7
         with:
-          path: team_colors.png
+          path: team_colors.jpg
           archive: false
 
       - name: Comment on PR with team colors image
