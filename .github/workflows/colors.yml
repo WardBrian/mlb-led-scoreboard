@@ -20,16 +20,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
-      - name: Test with unittest
+
+      - name: Generate team colors image
         run: |
           export RGBME_SUPPRESS_ADAPTER_LOAD_ERRORS=1
           python ./tests/display_team_colors.py save
 
-      - name: Comment image
+      - name: Upload team colors image
+        id: upload
+        uses: actions/upload-artifact@v7
+        with:
+          path: team_colors.png
+          archive: false
+
+      - name: Comment on PR with team colors image
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          filepath="./team_colors.png"
-          image_link=$(curl -X POST "https://api.imgur.com/3/upload" \
-            -F "image=@\"$filepath\"" | jq ".data.link" -r)
-          gh pr comment ${{ github.event.pull_request.number }} --body "Team colors changed in this PR! Preview: ![Team Colors]($image_link)"
+          gh pr comment ${{ github.event.pull_request.number }} --body "Team colors changed in this PR! Preview: ![Team Colors](${{ steps.upload.outputs.artifact-url }})"
