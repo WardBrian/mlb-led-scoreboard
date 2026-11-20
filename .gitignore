@@ -130,6 +130,7 @@ configs/
 logs.txt
 logs/
 team_colors.jpg
+game.jpg
 
 # Editors
 .vscode/
